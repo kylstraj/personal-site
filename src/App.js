@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
 
+var PAGES = {
+    0: {title: "Home", content: (<HomePage/>)},
+    1: {title: "About Jimmy", content: (<AboutPage/>)},
+    2: {title: "Projects", content: (<ProjectsPage/>)},
+    3: {title: "Resume", content: (<ResumePage/>)},
+    4: {title: "Contact Jimmy", content: (<ContactPage/>)}
+  };
+
 class HomePage extends Component {
   render() {
     return (
@@ -57,9 +65,15 @@ class ResumePage extends Component {
 
 class ProjectsPage extends Component {
   render() {
+    let title = "Projects";
+    let content = (
+      <div>
+        <p>Here are some projects I've worked on.</p>
+      </div>
+    );
     return (
       <div>
-        <p>Projects page</p>
+        <SecondaryPage title={title} content={content}/>
       </div>
     );
   }
@@ -97,38 +111,104 @@ class PageTitle extends Component {
   }
 }
 
-class Body extends Component {
+class Menu extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: 0
+      listVisible: false,
     };
   }
 
-  pageDict = {
-    0: (<HomePage/>),
-    1: (<AboutPage/>),
-    2: (<ResumePage/>),
-    3: (<ContactPage/>)
-  };
+  toggleListVisible() {
+    this.setState({listVisible: !this.state.listVisible});
+  }
+
+  render() {
+    return (
+      <div>
+        <MenuIcon clickHandler={() => this.toggleListVisible()}/>
+        <MenuList visible={this.state.listVisible}
+          selectFunction={this.props.selectFunction}/>
+      </div>
+    );
+  }
+}
+
+class MenuIcon extends Component {
+  render() {
+    return (
+      <span className="menu-icon" onClick={() => this.props.clickHandler()}>
+        <div></div>
+        <div></div>
+        <div></div>
+      </span>
+    );
+  }
+}
+
+class MenuList extends Component {
+  renderLink(index) {
+    return (<NavLink value={PAGES[index].title} onClick={this.makeOnClick(index)}/>);
+  }
+
+  makeOnClick(index) {
+    return function() {
+      this.props.selectFunction(index);
+    }
+  }
+
+  render() {
+    let links = [];
+    for (let pageIndex in PAGES)
+      links.push(this.renderLink(pageIndex));
+
+    return (
+      <span className={this.props.visible ? "visible" : "invisible"}>
+        {links}
+      </span>
+    );
+  }
+}
+
+class NavLink extends Component {
+  render() {
+    return (
+      <div className="nav-link" onClick={this.props.onClick}>{this.props.value}</div>
+    );
+  }
+}
+
+class Body extends Component {
+  constructor(props) {
+    super(props);
+    this.setPage = this.setPage.bind(this);
+    this.state = {
+      pageIndex: 0
+    };
+  }
 
   renderPage(index) {
-    return this.pageDict[index];
+    return PAGES[index].content;
   }
 
   render() {
     return (
       <article onClick={() => this.flip()}>
-        {this.renderPage(this.state.page)}
+        <Menu selectFunction={this.setPage}/>
+        {this.renderPage(this.state.pageIndex)}
       </article>
     );
   }
 
   flip() {
-    if (this.state.page >= Object.keys(this.pageDict).length - 1)
-      this.setState({page: 0});
+    if (this.state.pageIndex >= Object.keys(PAGES).length - 1)
+      this.setState({pageIndex: 0});
     else
-      this.setState({page: this.state.page + 1});
+      this.setState({pageIndex: this.state.pageIndex + 1});
+  }
+
+  setPage(index) {
+    this.setState({pageIndex: index});
   }
 }
 
@@ -188,6 +268,5 @@ class App extends Component {
     );
   }
 }
-
 
 export default App;

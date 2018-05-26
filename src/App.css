@@ -12,7 +12,7 @@ html {
   height: 100%;
   text-align: center;
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 50% 10% 40%;
 }
 
 .App-logo {
@@ -62,7 +62,8 @@ footer {
 article {
   height: 100%;
   background-color: rgb(235, 235, 255);
-  grid-column-end: 3;
+  grid-column-start: 2;
+  grid-column-end: 4;
 }
 
 .visible {
@@ -91,4 +92,16 @@ article {
 
 #page-title {
   font-size: 200%;
+}
+
+.menu-icon {
+  display: block;
+  position: relative;
+}
+
+.menu-icon div {
+  width: 30px;
+  height: 5px;
+  background-color: black;
+  margin: 5px;
 }
