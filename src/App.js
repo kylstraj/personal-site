@@ -3,20 +3,8 @@ import { BrowserRouter } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import SecondaryPage from './components/SecondaryPage';
 import AboutPage from './components/AboutPage';
+import ResumePage from './components/ResumePage';
 import './App.css';
-
-class ResumePage extends Component {
-  render() {
-    let title = "Resume";
-    return (
-      <SecondaryPage title={title}>
-        <div>
-          <embed src="resume.pdf"></embed>
-        </div>
-      </SecondaryPage>
-    );
-  }
-}
 
 class ProjectsPage extends Component {
   render() {
