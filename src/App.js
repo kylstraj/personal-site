@@ -1,22 +1,9 @@
 import React, { Component } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import SecondaryPage from './components/SecondaryPage';
+import AboutPage from './components/AboutPage';
 import './App.css';
-
-class AboutPage extends Component {
-  render() {
-    let title = "Hi, I'm Jimmy Kylstra.";
-    return (
-      <SecondaryPage 
-        title={title} 
-        linkFunction={this.props.linkFunction}
-      >
-        <p>I'm a computer programmer. My interests include web development, machine learning, low-latency computing, and Carolina basketball. I used to be a lawyer, and I'm still licensed to make citizens' arrests. I live in Chicago with my wife, Amy, and my sons, Abe and Saul.</p>
-        <p>I made this website with React and Webpack. You can see some other things I've made on my <Link text="projects page" pageIndex={1} linkFunction={this.props.linkFunction}/> and my <a href="https://github.com/kylstraj">GitHub</a>.</p>
-      </SecondaryPage>
-    );
-  }
-}
 
 class ResumePage extends Component {
   render() {
@@ -235,10 +222,12 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <Face images={this.state.images} msPerFrame={15000}/>
-        <Body/>
-      </div>
+      <BrowserRouter>
+        <div className="App">
+          <Face images={this.state.images} msPerFrame={15000}/>
+          <Body/>
+        </div>
+      </BrowserRouter>
     );
   }
 }
