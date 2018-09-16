@@ -4,18 +4,8 @@ import HomePage from './components/HomePage';
 import SecondaryPage from './components/SecondaryPage';
 import AboutPage from './components/AboutPage';
 import ResumePage from './components/ResumePage';
+import ProjectsPage from './components/ProjectsPage';
 import './App.css';
-
-class ProjectsPage extends Component {
-  render() {
-    let title = "Projects";
-    return (
-      <SecondaryPage title={title}>
-        <p>Here are some projects I've worked on.</p>
-      </SecondaryPage>
-    );
-  }
-}
 
 class ContactPage extends Component {
   render() {
