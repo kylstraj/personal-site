@@ -1,15 +1,6 @@
 import React, { Component } from 'react';
+import HomePage from './components/HomePage/HomePage';
 import './App.css';
-
-class HomePage extends Component {
-  render() {
-    return (
-      <div>
-        <MainTitle text="Jimmy Kylstra"/>
-      </div>
-    );
-  }
-}
 
 class SecondaryPage extends Component {
   render() {
@@ -85,14 +76,6 @@ class ContactPage extends Component {
       <div>
         <SecondaryPage title={title} content={content}/>
       </div>
-    );
-  }
-}
-
-class MainTitle extends Component {
-  render() {
-    return (
-      <h1 id="main-title">{this.props.text}</h1>
     );
   }
 }
