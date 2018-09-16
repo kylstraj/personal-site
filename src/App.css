@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Source%20Sans%20Pro');
 
+/*a {*/
+  /*text-decoration: none;*/
+  /*color: black;*/
+/*}*/
+
 html {
   background-color: blue;
   font-family: "Source Sans Pro", Verdana, "sans serif";
@@ -49,10 +54,10 @@ html {
   color: white;
 }
 
-#menu a {
-  text-decoration: none;
-  color: white;
-}
+/*#menu a {*/
+  /*text-decoration: none;*/
+  /*color: white;*/
+/*}*/
 
 footer {
   background-color: #blue;
@@ -125,13 +130,6 @@ article {
   line-height: 35px;
   position: relative;
   right: 20px;
-}
-
-.text-link,
-a {
-  cursor: pointer;
-  color: darkblue;
-  text-decoration: underline;
 }
 
 #menu {

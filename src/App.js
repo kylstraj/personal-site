@@ -1,110 +1,13 @@
 import React, { Component } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import SecondaryPage from './components/SecondaryPage';
 import AboutPage from './components/AboutPage';
 import ResumePage from './components/ResumePage';
 import ProjectsPage from './components/ProjectsPage';
 import ContactPage from './components/ContactPage';
+import Menu from './components/Menu';
 import './App.css';
-
-class Menu extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      listVisible: false,
-    };
-  }
-
-  toggleListVisible() {
-    this.setState({listVisible: !this.state.listVisible});
-  }
-
-  render() {
-    return (
-      <div id="menu">
-        <MenuIcon clickHandler={() => this.toggleListVisible()}/>
-        <MenuList 
-          visible={this.state.listVisible}
-          selectFunction={this.props.selectFunction}
-          pages={this.props.pages}
-        />
-      </div>
-    );
-  }
-}
-
-class MenuIcon extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selected: false
-    }
-  }
-
-  render() {
-    return (
-      <span className={this.state.selected ? "menu-icon selected" : "menu-icon"}
-        onClick={() => {
-          this.props.clickHandler();
-          this.setState({selected: !this.state.selected});
-        }}>
-        <div></div>
-        <div></div>
-        <div></div>
-      </span>
-    );
-  }
-}
-
-class MenuList extends Component {
-  renderLink(index) {
-    return (
-      <NavLink key={index}
-      value={this.props.pages[index].title} 
-      onClick={this.makeOnClick(index)}/>
-    );
-  }
-
-  makeOnClick(index) {
-    let onClick = function() {
-      this.props.selectFunction(index);
-    };
-    onClick = onClick.bind(this);
-    return onClick;
-  }
-
-  render() {
-    let links = [];
-    for (let pageIndex in this.props.pages)
-      links.push(this.renderLink(pageIndex));
-
-    return (
-      <span className={this.props.visible ? "visible" : "invisible"}>
-        {links}
-      </span>
-    );
-  }
-}
-
-class NavLink extends Component {
-  render() {
-    return (
-      <span className="nav-link" onClick={this.props.onClick}>{this.props.value}</span>
-    );
-  }
-}
-
-class Link extends Component {
-  render() {
-    return (
-      <span className="text-link" 
-        onClick={() => this.props.linkFunction(this.props.pageIndex)}>
-        {this.props.text}
-      </span>
-    );
-  }
-}
 
 class Body extends Component {
   constructor(props) {
@@ -130,7 +33,31 @@ class Body extends Component {
     return (
       <article> 
         <Menu selectFunction={this.setPage} pages={this.PAGES}/>
-        {this.renderPage(this.state.pageIndex)}
+        <Switch>
+          <Route
+            path="/about"
+            component={AboutPage}
+          />
+          <Route
+            path="/projects"
+            component={ProjectsPage}
+          />
+          <Route
+            path="/resume"
+            component={ResumePage}
+          />
+          <Route
+            path="/contact"
+            component={ContactPage}
+          />
+          <Route
+            path="/"
+            component={HomePage}
+          />
+          <Route
+            render={() => <Redirect to="/" />}
+          />
+        </Switch>
       </article>
     );
   }
