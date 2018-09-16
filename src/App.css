@@ -1,5 +1,8 @@
+@import url('https://fonts.googleapis.com/css?family=Source%20Sans%20Pro');
+
 html {
   background-color: blue;
+  font-family: "Source Sans Pro", Verdana, "sans serif";
   height: 100%;
   overflow: hidden;
 }
@@ -68,6 +71,8 @@ article {
 
 .visible {
   display: normal;
+  background-color: rgb(235, 235, 255);
+  color: black;
 }
 
 .invisible {
@@ -87,7 +92,7 @@ article {
 #main-title {
   font-size: 300%;
   position: relative;
-  top: 400px;
+  top: 300px;
 }
 
 #page-title {
@@ -95,7 +100,7 @@ article {
 }
 
 .menu-icon {
-  display: block;
+  display: inline-block;
   position: relative;
 }
 
@@ -104,4 +109,46 @@ article {
   height: 5px;
   background-color: black;
   margin: 5px;
+}
+
+.menu-icon.selected {
+  background-color: darkblue;
+}
+
+.menu-icon.selected div {
+  background-color: rgb(235, 235, 255);
+}
+
+.nav-link {
+  cursor: pointer;
+  margin: 0 10px;
+  line-height: 35px;
+  position: relative;
+  right: 20px;
+}
+
+.text-link,
+a {
+  cursor: pointer;
+  color: darkblue;
+  text-decoration: underline;
+}
+
+#menu {
+  display: grid;
+  grid-template-columns: 40px calc(100% - 40px);
+  text-align: center;
+}
+
+#page {
+  padding: 30px;
+}
+
+#page p {
+  text-align: left;
+}
+
+embed {
+  width: 80%;
+  height: 700px;
 }

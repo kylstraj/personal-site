@@ -1,14 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 
-var PAGES = {
-    0: {title: "Home", content: (<HomePage/>)},
-    1: {title: "About Jimmy", content: (<AboutPage/>)},
-    2: {title: "Projects", content: (<ProjectsPage/>)},
-    3: {title: "Resume", content: (<ResumePage/>)},
-    4: {title: "Contact Jimmy", content: (<ContactPage/>)}
-  };
-
 class HomePage extends Component {
   render() {
     return (
@@ -22,7 +14,7 @@ class HomePage extends Component {
 class SecondaryPage extends Component {
   render() {
     return(
-      <div>
+      <div id="page">
         <PageTitle text={this.props.title}/>
         {this.props.content}
       </div>
@@ -32,16 +24,18 @@ class SecondaryPage extends Component {
 
 class AboutPage extends Component {
   render() {
-    let title = "About Jimmy";
+    let title = "Hi, I'm Jimmy Kylstra.";
     let content = (
       <div>
-        <p>Here is some content about me.</p>
-        <p>Content content content.</p>
+        <p>I'm a computer programmer. My interests include web development, machine learning, low-latency computing, and Carolina basketball. I used to be a lawyer, and I'm still licensed to make citizens' arrests. I live in Chicago with my wife, Amy, and my sons, Abe and Saul.</p>
+        <p>I made this website with React and Webpack. You can see some other things I've made on my <Link text="projects page" pageIndex={1} linkFunction={this.props.linkFunction}/> and my <a href="https://github.com/kylstraj">GitHub</a>.</p>
       </div>
     );
     return (
       <div>
-        <SecondaryPage title={title} content={content}/>
+        <SecondaryPage title={title} 
+          content={content} 
+          linkFunction={this.props.linkFunction}/>
       </div>
     );
   }
@@ -52,7 +46,7 @@ class ResumePage extends Component {
     let title = "Resume";
     let content = (
       <div>
-        <p>This is where my resume will go.</p>
+        <embed src="resume.pdf"></embed>
       </div>
     );
     return (
@@ -125,19 +119,33 @@ class Menu extends Component {
 
   render() {
     return (
-      <div>
+      <div id="menu">
         <MenuIcon clickHandler={() => this.toggleListVisible()}/>
-        <MenuList visible={this.state.listVisible}
-          selectFunction={this.props.selectFunction}/>
+        <MenuList 
+          visible={this.state.listVisible}
+          selectFunction={this.props.selectFunction}
+          pages={this.props.pages}
+        />
       </div>
     );
   }
 }
 
 class MenuIcon extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selected: false
+    }
+  }
+
   render() {
     return (
-      <span className="menu-icon" onClick={() => this.props.clickHandler()}>
+      <span className={this.state.selected ? "menu-icon selected" : "menu-icon"}
+        onClick={() => {
+          this.props.clickHandler();
+          this.setState({selected: !this.state.selected});
+        }}>
         <div></div>
         <div></div>
         <div></div>
@@ -148,18 +156,24 @@ class MenuIcon extends Component {
 
 class MenuList extends Component {
   renderLink(index) {
-    return (<NavLink value={PAGES[index].title} onClick={this.makeOnClick(index)}/>);
+    return (
+      <NavLink key={index}
+      value={this.props.pages[index].title} 
+      onClick={this.makeOnClick(index)}/>
+    );
   }
 
   makeOnClick(index) {
-    return function() {
+    let onClick = function() {
       this.props.selectFunction(index);
-    }
+    };
+    onClick = onClick.bind(this);
+    return onClick;
   }
 
   render() {
     let links = [];
-    for (let pageIndex in PAGES)
+    for (let pageIndex in this.props.pages)
       links.push(this.renderLink(pageIndex));
 
     return (
@@ -173,7 +187,18 @@ class MenuList extends Component {
 class NavLink extends Component {
   render() {
     return (
-      <div className="nav-link" onClick={this.props.onClick}>{this.props.value}</div>
+      <span className="nav-link" onClick={this.props.onClick}>{this.props.value}</span>
+    );
+  }
+}
+
+class Link extends Component {
+  render() {
+    return (
+      <span className="text-link" 
+        onClick={() => this.props.linkFunction(this.props.pageIndex)}>
+        {this.props.text}
+      </span>
     );
   }
 }
@@ -182,33 +207,34 @@ class Body extends Component {
   constructor(props) {
     super(props);
     this.setPage = this.setPage.bind(this);
+    this.PAGES = [
+      {title: "About", content: (<AboutPage linkFunction={this.setPage}/>)},
+      {title: "Projects", content: (<ProjectsPage/>)},
+      {title: "Resume", content: (<ResumePage/>)},
+      {title: "Contact", content: (<ContactPage/>)}
+    ];
     this.state = {
-      pageIndex: 0
+      pageIndex: 0,
+      page: {title: "Home Page", content: (<HomePage/>)}
     };
   }
 
   renderPage(index) {
-    return PAGES[index].content;
+    return this.state.page.content;
   }
 
   render() {
     return (
-      <article onClick={() => this.flip()}>
-        <Menu selectFunction={this.setPage}/>
+      <article> 
+        <Menu selectFunction={this.setPage} pages={this.PAGES}/>
         {this.renderPage(this.state.pageIndex)}
       </article>
     );
   }
 
-  flip() {
-    if (this.state.pageIndex >= Object.keys(PAGES).length - 1)
-      this.setState({pageIndex: 0});
-    else
-      this.setState({pageIndex: this.state.pageIndex + 1});
-  }
-
   setPage(index) {
-    this.setState({pageIndex: index});
+    this.setState({pageIndex: index,
+                   page: this.PAGES[index]});
   }
 }
 
