@@ -1,33 +1,19 @@
 import React, { Component } from 'react';
 import HomePage from './components/HomePage';
+import SecondaryPage from './components/SecondaryPage';
 import './App.css';
-
-class SecondaryPage extends Component {
-  render() {
-    return(
-      <div id="page">
-        <PageTitle text={this.props.title}/>
-        {this.props.content}
-      </div>
-    );
-  }
-}
 
 class AboutPage extends Component {
   render() {
     let title = "Hi, I'm Jimmy Kylstra.";
-    let content = (
-      <div>
+    return (
+      <SecondaryPage 
+        title={title} 
+        linkFunction={this.props.linkFunction}
+      >
         <p>I'm a computer programmer. My interests include web development, machine learning, low-latency computing, and Carolina basketball. I used to be a lawyer, and I'm still licensed to make citizens' arrests. I live in Chicago with my wife, Amy, and my sons, Abe and Saul.</p>
         <p>I made this website with React and Webpack. You can see some other things I've made on my <Link text="projects page" pageIndex={1} linkFunction={this.props.linkFunction}/> and my <a href="https://github.com/kylstraj">GitHub</a>.</p>
-      </div>
-    );
-    return (
-      <div>
-        <SecondaryPage title={title} 
-          content={content} 
-          linkFunction={this.props.linkFunction}/>
-      </div>
+      </SecondaryPage>
     );
   }
 }
@@ -35,15 +21,12 @@ class AboutPage extends Component {
 class ResumePage extends Component {
   render() {
     let title = "Resume";
-    let content = (
-      <div>
-        <embed src="resume.pdf"></embed>
-      </div>
-    );
     return (
-      <div>
-        <SecondaryPage title={title} content={content}/>
-      </div>
+      <SecondaryPage title={title}>
+        <div>
+          <embed src="resume.pdf"></embed>
+        </div>
+      </SecondaryPage>
     );
   }
 }
@@ -51,15 +34,10 @@ class ResumePage extends Component {
 class ProjectsPage extends Component {
   render() {
     let title = "Projects";
-    let content = (
-      <div>
-        <p>Here are some projects I've worked on.</p>
-      </div>
-    );
     return (
-      <div>
-        <SecondaryPage title={title} content={content}/>
-      </div>
+      <SecondaryPage title={title}>
+        <p>Here are some projects I've worked on.</p>
+      </SecondaryPage>
     );
   }
 }
@@ -67,23 +45,10 @@ class ProjectsPage extends Component {
 class ContactPage extends Component {
   render() {
     let title = "Contact Jimmy";
-    let content = (
-      <div>
+    return (
+      <SecondaryPage title={title}>
         <p>This is where a contact box will go.</p>
-      </div>
-    );
-    return (
-      <div>
-        <SecondaryPage title={title} content={content}/>
-      </div>
-    );
-  }
-}
-
-class PageTitle extends Component {
-  render() {
-    return (
-      <h1 id="page-title">{this.props.text}</h1>
+      </SecondaryPage>
     );
   }
 }
