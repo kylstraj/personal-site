@@ -5,18 +5,8 @@ import SecondaryPage from './components/SecondaryPage';
 import AboutPage from './components/AboutPage';
 import ResumePage from './components/ResumePage';
 import ProjectsPage from './components/ProjectsPage';
+import ContactPage from './components/ContactPage';
 import './App.css';
-
-class ContactPage extends Component {
-  render() {
-    let title = "Contact Jimmy";
-    return (
-      <SecondaryPage title={title}>
-        <p>This is where a contact box will go.</p>
-      </SecondaryPage>
-    );
-  }
-}
 
 class Menu extends Component {
   constructor(props) {
